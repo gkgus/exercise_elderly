@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.chh85.exercise_elderly">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="exercise_elderly"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".userinfo_act" />
+        <activity android:name=".Exercise_act" />
+        <activity android:name=".Exercise1_act" />
+        <activity android:name=".Exercise2_act" />
+        <activity android:name=".Exercise_list_act" />
+        <activity android:name=".Exercise3_act" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".Record_act"></activity>
+    </application>
+
+</manifest>

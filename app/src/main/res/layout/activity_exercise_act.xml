@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Exercise_act">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="주간 목표"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="13pt" />
+
+        <TextView
+            android:id="@+id/week_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="date"
+            android:textAlignment="center"
+            android:textSize="9pt" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/yusanso_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="유산소"
+                        android:textSize="11pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ex1_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3회"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="20pt" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/muscle_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="근력운동"
+                        android:textSize="11pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ex2_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3회"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="20pt" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/stretch_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="스트레칭"
+                        android:textSize="11pt"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ex3_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3회"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="20pt" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/exercise1_btn"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="유산소 운동"
+                android:textAlignment="center"
+                android:textSize="13pt" />
+
+            <Button
+                android:id="@+id/exercise2_btn"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="근력 운동"
+                android:textAlignment="center"
+                android:textSize="13pt" />
+
+            <Button
+                android:id="@+id/exercise3_btn"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="스트레칭"
+                android:textAlignment="center"
+                android:textSize="13pt" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
