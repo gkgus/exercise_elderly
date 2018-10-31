@@ -69,9 +69,6 @@ public class Record_act extends AppCompatActivity {
         //CalendarDay day = CalendarDay.from(calendar);
         //dates.add(day);
 
-
-
-
     }
 
     public void getFB(){

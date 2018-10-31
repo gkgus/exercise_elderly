@@ -99,6 +99,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             startActivity(new Intent(SignInActivity.this, MainActivity.class));
+
                             finish();
                         }
                     }
