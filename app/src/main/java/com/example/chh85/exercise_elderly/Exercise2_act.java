@@ -42,15 +42,21 @@ public class Exercise2_act extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         final String[] exercise2title = {"넙다리 네갈래근 힘주기","엎드려서 다리 들어 올리기","누워서 다리 들어 올리기",
                 "옆으로 누워서 다리 들어 올리기","앉아서 엉덩이 관절 굽히기","의자에 앉아 다리 뻗어 올리기"};
-
+        final String[] exercise2_how ={"(좌/우) 무릎 아래에 접은 수건을 놓고 발을 몸 쪽으로 당겨줍니다.","엎드린 상태에서 두다리를 들어 올려줍니다.",
+                "(좌/우) 누운 상태에서 상체를 들어올리고 다리를 들어 올립니다.","(좌/우) 옆으로 누운 상태에서 다리를 들어 올립니다.",
+                "(좌/우) 앉은 상태에서 한 쪽 다리를 들어 올립니다.","(좌/우) 의자에 앉아 한쪽 다리를 뻗어 올립니다."};
         final ArrayList<ExerciseInfo> exercise2list = new ArrayList<>();
+        for(int i =0; i<exercise2title.length;i++){
+            exercise2list.add( new ExerciseInfo(R.drawable.ex2_1,exercise2title[i],exercise2_how[i]));
+        }
+        /*
         exercise2list.add( new ExerciseInfo(R.drawable.ex2_1,exercise2title[0]));
         exercise2list.add(new ExerciseInfo(R.drawable.ex2_2,exercise2title[1]));
         exercise2list.add(new ExerciseInfo(R.drawable.ex2_3,exercise2title[2]));
         exercise2list.add(new ExerciseInfo(R.drawable.ex2_4,exercise2title[3]));
         exercise2list.add(new ExerciseInfo(R.drawable.ex2_5,exercise2title[4]));
         exercise2list.add(new ExerciseInfo(R.drawable.ex2_6,exercise2title[5]));
-
+*/
 
         MyAdapter myAdapter = new MyAdapter(exercise2list);
 

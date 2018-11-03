@@ -16,7 +16,7 @@ public class RecordDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE record_exercise (startdate date, ex_type int,ex_time int);");
+        db.execSQL("CREATE TABLE record_exercise (startdate date, ex_type String,ex_time String);");
     }
 
     @Override
@@ -25,15 +25,15 @@ public class RecordDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<String> readDB(ExerciseDB exerciseDB) {
+    public ArrayList<String> readDB(RecordDB recordDB) {
         ArrayList<String> info_list = new ArrayList<String>();
 
-        sqldb = exerciseDB.getReadableDatabase();
+        sqldb = recordDB.getReadableDatabase();
         Cursor cursor;
         cursor = sqldb.rawQuery("SELECT * FROM record_exercise", null);
 
         while (cursor.moveToNext()) {
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 3; i++) {
                 info_list.add(cursor.getString(i));
             }
 
@@ -41,18 +41,17 @@ public class RecordDB extends SQLiteOpenHelper {
         sqldb.close();
         return info_list;
     }
-    public void insertDB(ExerciseDB exerciseDB, String date, int ex_type, int ex2_weeknum, int ex_time){
-        sqldb = exerciseDB.getWritableDatabase();
-        exerciseDB.onUpgrade(sqldb,1,2);
+    public void insertDB(RecordDB recordDB, String date, String ex_type, String ex_time){
+        sqldb = recordDB.getWritableDatabase();
+        //recordDB.onUpgrade(sqldb,1,2);
         sqldb.execSQL("INSERT INTO record_exercise VALUES ( '" +date +"','"
                 +ex_type+"','"
-                +ex2_weeknum+"','"
                 +ex_time+"');");
         sqldb.close();
     }
 
-    public Boolean existDB(ExerciseDB exerciseDB) {
-        sqldb = exerciseDB.getReadableDatabase();
+    public Boolean existDB(RecordDB recordDB) {
+        sqldb = recordDB.getReadableDatabase();
         Cursor cursor;
         cursor = sqldb.rawQuery("SELECT * FROM record_exercise", null);
         cursor.moveToFirst();
@@ -65,9 +64,5 @@ public class RecordDB extends SQLiteOpenHelper {
         }
     }
 
-    public void updateDB(ExerciseDB exerciseDB, String record, int updateValue){
-        sqldb=exerciseDB.getWritableDatabase();
-        sqldb.execSQL("UPDATE user_exercise SET "+record+"="+updateValue+";");
-        sqldb.close();
-    }
+
 }

@@ -26,12 +26,15 @@ import java.util.Map;
 public class Record_act extends AppCompatActivity {
     private DatabaseReference mRead_FB;
     String mUserID = Send_FB.getmUserID();
+    RecordDB recordDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_act);
+        recordDB = new RecordDB(this,"exerciseDB",null,1);
 
         getFB();
+
 
         MaterialCalendarView mcv = findViewById(R.id.calendarView);
 
@@ -43,18 +46,19 @@ public class Record_act extends AppCompatActivity {
                 .commit();
         mcv.addDecorators();
 
-        String tmpdate= "2018-10-29";
+        String checked_date= "2018-10-29"; //체크되어야하는 날짜
         ArrayList<CalendarDay> dates = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         try {
-            Date selected_date = new SimpleDateFormat("yyyy-MM-dd").parse(tmpdate);
-
+            Date selected_date = new SimpleDateFormat("yyyy-MM-dd").parse(checked_date);
             calendar.setTime(selected_date);
-            CalendarDay day = CalendarDay.from(calendar);
-            dates.add(day);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        CalendarDay day = CalendarDay.from(calendar);
+        dates.add(day);
 
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -73,16 +77,26 @@ public class Record_act extends AppCompatActivity {
 
     public void getFB(){
         mRead_FB= FirebaseDatabase.getInstance().getReference().child(mUserID).child("exerciserec");
-
+        final ArrayList<String> ex_list = new ArrayList<>();
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String tmpkey = childDataSnapshot.getKey();
-                    System.out.println("KEY"+tmpkey);
-                    System.out.println(""+ childDataSnapshot.child("date").getValue());   //gives the value for given keyname
+                   // System.out.println("KEY"+tmpkey);
+                   // System.out.println(""+ childDataSnapshot.child("date").getValue());   //gives the value for given keyname
+                    ex_list.add(childDataSnapshot.child("date").getValue().toString());
+                    ex_list.add(childDataSnapshot.child("exercise_name").getValue().toString());
+                    ex_list.add(childDataSnapshot.child("time").getValue().toString());
+                    System.out.println(ex_list.get(0)+" "+ex_list.get(1)+" "+ex_list.get(2));
+                    recordDB.insertDB(recordDB,ex_list.get(0),ex_list.get(1),ex_list.get(2));
+                    ex_list.clear();
                 }
+
+                ArrayList<String> DBtmp = new ArrayList<>();
+                DBtmp = recordDB.readDB(recordDB);
+                System.out.println("FROM DB!!  "+DBtmp.size());
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.example.chh85.exercise_elderly;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,20 +12,25 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     UserDB userDB;
     Intent exercise_intent;
     int updated =3;
     Send_FB fb_userid;
-
+    String user_id;
     //firebase login activity
     private static final int REQUEST_INVITE = 1000;
 
     // Firebase 인스턴스 변수
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-
+    private DatabaseReference mDatabase;
 
     // Google
     private GoogleApiClient mGoogleApiClient;
@@ -49,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
             mUsername = mFirebaseUser.getDisplayName();
-            fb_userid.setmUserID(mFirebaseUser.getUid());
+            user_id=mFirebaseUser.getUid();
+            fb_userid.setmUserID(user_id);
+            Check_currentuser();
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
@@ -116,5 +124,25 @@ public class MainActivity extends AppCompatActivity {
                 updated = 1;
                 break;
         }
+    }
+
+    public void Check_currentuser(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //for(DataSnapshot data: dataSnapshot.getChildren()){ }
+                if (dataSnapshot.hasChild(user_id)) {
+                    System.out.println("=====USERID EXISTS!!===="+user_id);
+                } else {
+                    System.out.println("=====NO USERID===="+user_id);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -13,6 +13,7 @@ public class Exercise_list_act extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_list_act);
         TextView textView = (TextView)findViewById(R.id.ex2_title);
+        TextView exercise_how = (TextView) findViewById(R.id.exercise_how);
         ImageView imgView = (ImageView) findViewById(R.id.ex2_img);
         Intent getintent = getIntent();
         ExerciseInfo exerciseInfo;
@@ -20,5 +21,6 @@ public class Exercise_list_act extends AppCompatActivity {
 
         imgView.setImageResource(exerciseInfo.drawableId);
         textView.setText(exerciseInfo.exercise_name);
+        exercise_how.setText(exerciseInfo.exercise_how);
     }
 }

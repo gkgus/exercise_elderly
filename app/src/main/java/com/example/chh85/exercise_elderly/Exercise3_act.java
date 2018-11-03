@@ -43,15 +43,21 @@ public class Exercise3_act extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         final String[] exercise3title = {"누워서 무릎 가슴으로 당기기","누워서 무릎 펴서 가슴으로 당기기","허리 숙여 발목 잡기",
                 "허리 숙여 발목 잡기","넙다리 안쪽 늘리기","옆으로 누워서 발 뒤로 당기기"};
-
+        final String[] exercise3_how = {"(좌/우) 등을 바닥에 대고 누운 뒤 무릎을 가슴 부근까지 당겨줍니다. ","(좌/우) 등을 바닥에 대고 누운 뒤 무릎을 핀 상태로 가슴 부근까지 당겨줍니다."
+        ,"(좌/우) 한 쪽발을 무릎 안쪽에 붙인 뒤 손으로 발목을 잡습니다.","양 쪽 무릎을 붙인 뒤 손으로 발목을 잡습니다.","양 쪽 발바닥을 맞대고 상체를 숙여줍니다.",
+        "(좌/우) 옆으로 누운 뒤 위쪽 다리의 발을 잡고 뒤로 당겨줍니다."};
         final ArrayList<ExerciseInfo> exerciselist3 = new ArrayList<>();
-        exerciselist3.add( new ExerciseInfo(R.drawable.ex3_1,exercise3title[0]));
+        for(int i =0; i<exercise3title.length;i++){
+            exerciselist3.add( new ExerciseInfo(R.drawable.ex3_1,exercise3title[i],exercise3_how[i]));
+        }
+        /*
+        exerciselist3.add( new ExerciseInfo(R.drawable.ex3_1,exercise3title[0],exercise3_how[0]));
         exerciselist3.add(new ExerciseInfo(R.drawable.ex3_2,exercise3title[1]));
         exerciselist3.add(new ExerciseInfo(R.drawable.ex3_3,exercise3title[2]));
         exerciselist3.add(new ExerciseInfo(R.drawable.ex3_4,exercise3title[3]));
         exerciselist3.add(new ExerciseInfo(R.drawable.ex3_5,exercise3title[4]));
         exerciselist3.add(new ExerciseInfo(R.drawable.ex3_6,exercise3title[5]));
-
+*/
 
         MyAdapter myAdapter = new MyAdapter(exerciselist3);
 

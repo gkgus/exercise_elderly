@@ -14,7 +14,8 @@
         android:layout_marginTop="25dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="12pt" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="14pt" />
 
     <ImageView
         android:id="@+id/ex2_img"
@@ -22,5 +23,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/ex2_1" />
+
+    <TextView
+        android:id="@+id/exercise_how"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="10sp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="10pt" />
 
 </LinearLayout>
