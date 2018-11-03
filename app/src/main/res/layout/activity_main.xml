@@ -22,24 +22,29 @@
 
 
         <Button
-            android:id="@+id/exercise_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="운동하기"
-            android:textSize="14pt" />
-
-        <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="건강 정보" />
 
-        <Button
+        <ImageButton
+            android:id="@+id/exercise_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/exercise_img" />
+
+
+        <ImageButton
             android:id="@+id/record_btn"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="기록"
-            android:textSize="14pt" />
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/record_img" />
 
 
     </LinearLayout>

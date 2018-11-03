@@ -63,10 +63,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //Button user_info_btn = (Button) findViewById(R.id.user_info);
-        Button exercise_btn = (Button) findViewById(R.id.exercise_btn);
-        Button record_btn = (Button) findViewById(R.id.record_btn);
-        final ImageButton userinfo_btn;
+        //Button exercise_btn = (Button) findViewById(R.id.exercise_btn);
+        //Button record_btn = (Button) findViewById(R.id.record_btn);
+        final ImageButton userinfo_btn,exercise_btn,record_btn;
         userinfo_btn = (ImageButton) findViewById(R.id.userinfo_btn);
+        exercise_btn = (ImageButton) findViewById(R.id.exercise_btn);
+        record_btn = (ImageButton) findViewById(R.id.record_btn);
         userDB = new UserDB(this,"user_db",null,1);
 
 
