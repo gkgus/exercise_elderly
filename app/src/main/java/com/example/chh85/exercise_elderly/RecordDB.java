@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecordDB extends SQLiteOpenHelper {
     SQLiteDatabase sqldb;
@@ -16,7 +18,7 @@ public class RecordDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE record_exercise (startdate date, ex_type String,ex_time String);");
+        db.execSQL("CREATE TABLE record_exercise (ex_date date, ex_type String,ex_time String);");
     }
 
     @Override
@@ -41,28 +43,50 @@ public class RecordDB extends SQLiteOpenHelper {
         sqldb.close();
         return info_list;
     }
-    public void insertDB(RecordDB recordDB, String date, String ex_type, String ex_time){
+
+    public void insertDB(RecordDB recordDB, String date, String ex_type, String ex_time) {
         sqldb = recordDB.getWritableDatabase();
         //recordDB.onUpgrade(sqldb,1,2);
-        sqldb.execSQL("INSERT INTO record_exercise VALUES ( '" +date +"','"
-                +ex_type+"','"
-                +ex_time+"');");
+        sqldb.execSQL("INSERT INTO record_exercise VALUES ( '" + date + "','"
+                + ex_type + "','"
+                + ex_time + "');");
         sqldb.close();
     }
 
-    public Boolean existDB(RecordDB recordDB) {
+    public void existDB(RecordDB recordDB) {
         sqldb = recordDB.getReadableDatabase();
         Cursor cursor;
         cursor = sqldb.rawQuery("SELECT * FROM record_exercise", null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
+            recordDB.onUpgrade(sqldb, 1, 2);
             sqldb.close();
-            return true;
+            //return true;
         } else {
+            //recordDB.onUpgrade(sqldb,1,2);
             sqldb.close();
-            return false;
+            //return false;
         }
     }
 
+    public ArrayList<String> date_exercise(RecordDB recordDB, String date) {
+        ArrayList<String> exercise_list = new ArrayList<String>();
+        sqldb = recordDB.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqldb.rawQuery("SELECT ex_type,ex_time FROM record_exercise" + " WHERE " + "ex_date= '" + date + "';", null);
 
+        while (cursor.moveToNext()) {
+
+            while (cursor.moveToNext()) {
+                for (int i = 0; i < 2; i++) {
+                    exercise_list.add(cursor.getString(i));
+                }
+            }
+            sqldb.close();
+
+        }
+        return exercise_list;
+    }
 }
+
+

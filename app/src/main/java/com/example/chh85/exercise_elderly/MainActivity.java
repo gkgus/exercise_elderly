@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             mUsername = mFirebaseUser.getDisplayName();
             user_id=mFirebaseUser.getUid();
             fb_userid.setmUserID(user_id);
-            Check_currentuser();
+            //Check_currentuser();            //이전에 사용했던 유저인지 확인한다.
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         exercise_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userDB.exist_db(userDB)==true){
+                if(userDB.exist_db(userDB)==true){  //DB에 정보가 있으면 보여준다. 없으면 운동을 실행할 수 없음.
                     startActivity(exercise_intent);
                 }
                 else{
@@ -134,8 +134,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //for(DataSnapshot data: dataSnapshot.getChildren()){ }
-                if (dataSnapshot.hasChild(user_id)) {
+                if (dataSnapshot.hasChild(user_id)) {       //사용자 아이디에 정보가 존재한다.
                     System.out.println("=====USERID EXISTS!!===="+user_id);
+
                 } else {
                     System.out.println("=====NO USERID===="+user_id);
                 }

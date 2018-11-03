@@ -1,9 +1,12 @@
 package com.example.chh85.exercise_elderly;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,12 +30,13 @@ public class Record_act extends AppCompatActivity {
     private DatabaseReference mRead_FB;
     String mUserID = Send_FB.getmUserID();
     RecordDB recordDB;
+    ArrayList<String> date_exerciselist = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_act);
         recordDB = new RecordDB(this,"exerciseDB",null,1);
-
+        recordDB.existDB(recordDB);
         getFB();
 
 
@@ -59,11 +63,15 @@ public class Record_act extends AppCompatActivity {
 
         CalendarDay day = CalendarDay.from(calendar);
         dates.add(day);
-
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
 
+                String select_date = date.toString();
+                select_date = select_date.replaceFirst("CalendarDay\\{","");
+                select_date = select_date.replaceFirst("\\}","");
+                date_exerciselist =recordDB.date_exercise(recordDB,select_date);
+                Dialog(select_date);
             }
         });
         mcv.addDecorators(new EventDecorator(Color.RED,dates));
@@ -107,5 +115,48 @@ public class Record_act extends AppCompatActivity {
         };
 
         mRead_FB.addListenerForSingleValueEvent(postListener);
+    }
+
+    public void Dialog(String select_date){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(select_date);
+        String contents="\n";
+        if(date_exerciselist.size()>0){
+            for(int i=0;i<date_exerciselist.size();i++){
+                if(i%2==0){
+                    switch (date_exerciselist.get(i)){
+                        case "1":
+                            contents= contents.concat("유산소운동: ");
+                            break;
+                        case "2":
+                            contents= contents.concat("근력운동: ");
+                            break;
+                        case "3":
+                            contents= contents.concat("스트레칭: ");
+                            break;
+                    }
+                } else{
+                    contents= contents.concat(date_exerciselist.get(i)+"분"+"\n");
+                }
+            }
+            builder.setMessage(contents);
+        } else{
+            builder.setMessage("운동 기록이 없습니다.");
+        }
+
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        builder.show();
+    }
+
+
+
+
+    public void getExercisedate(){
+
     }
 }
