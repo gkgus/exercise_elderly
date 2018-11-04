@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class RecordDB extends SQLiteOpenHelper {
@@ -77,15 +78,26 @@ public class RecordDB extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
 
-            while (cursor.moveToNext()) {
                 for (int i = 0; i < 2; i++) {
                     exercise_list.add(cursor.getString(i));
-                }
             }
-            sqldb.close();
 
         }
+        sqldb.close();
         return exercise_list;
+    }
+
+    public HashSet<String> set_of_date(RecordDB recordDB){
+        HashSet<String> date_set = new HashSet<>();
+        sqldb = recordDB.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqldb.rawQuery("SELECT ex_date FROM record_exercise;", null);
+
+        while (cursor.moveToNext()) {
+                date_set.add(cursor.getString(0));
+        }
+        sqldb.close();
+        return date_set;
     }
 }
 

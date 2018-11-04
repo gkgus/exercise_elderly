@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     UserDB userDB;
     Intent exercise_intent;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername;
     private String mPhotoUrl;
 
+    private DatabaseReference mRead_FB;
+    RecordDB recordDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +113,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        recordDB = new RecordDB(this,"record_exercise",null,1);
+        recordDB.existDB(recordDB);
+
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getFB();
+            }
+        });
+        th.run();
     }
 
     @Override
@@ -152,4 +166,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    public void getFB() {
+        mRead_FB= FirebaseDatabase.getInstance().getReference().child(user_id).child("exerciserec");
+        final ArrayList<String> ex_list = new ArrayList<>();
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String tmpkey = childDataSnapshot.getKey();
+                    // System.out.println("KEY"+tmpkey);
+                    // System.out.println(""+ childDataSnapshot.child("date").getValue());   //gives the value for given keyname
+                    ex_list.add(childDataSnapshot.child("date").getValue().toString());
+                    ex_list.add(childDataSnapshot.child("exercise_name").getValue().toString());
+                    ex_list.add(childDataSnapshot.child("time").getValue().toString());
+                    //System.out.println("====="+ex_list.get(0)+" "+ex_list.get(1)+" "+ex_list.get(2));
+                    recordDB.insertDB(recordDB,ex_list.get(0),ex_list.get(1),ex_list.get(2));
+                    ex_list.clear();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                System.out.println("==========DB ERROR============");
+            }
+        };
+
+        mRead_FB.addListenerForSingleValueEvent(postListener);
+
+    }
+
 }
