@@ -1,6 +1,7 @@
 package com.example.chh85.exercise_elderly;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ public class Exercise3_act extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("스트레칭");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise3_act);
 

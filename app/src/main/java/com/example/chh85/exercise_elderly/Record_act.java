@@ -3,6 +3,7 @@ package com.example.chh85.exercise_elderly;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,12 +28,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Record_act extends AppCompatActivity {
+
     private DatabaseReference mRead_FB;
     String mUserID = Send_FB.getmUserID();
     RecordDB recordDB;
     ArrayList<String> date_exerciselist = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("기록");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_act);
         recordDB = new RecordDB(this,"exerciseDB",null,1);
@@ -44,11 +48,31 @@ public class Record_act extends AppCompatActivity {
 
         mcv.state().edit()
                 .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setMinimumDate(CalendarDay.from(2017, 0, 1))
+                .setMinimumDate(CalendarDay.from(2018, 1, 1))
                 .setMaximumDate(CalendarDay.from(2030, 11, 31))
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
         mcv.addDecorators();
+
+
+
+        mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+
+                String select_date = date.toString();
+                select_date = select_date.replaceFirst("CalendarDay\\{","");
+                select_date = select_date.replaceFirst("\\}","");
+                date_exerciselist =recordDB.date_exercise(recordDB,select_date);
+                Dialog(select_date);
+            }
+        });
+
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.setTime(selected_date);
+        //calendar.add(Calendar.DATE, 5);
+        //CalendarDay day = CalendarDay.from(calendar);
+        //dates.add(day);
 
         String checked_date= "2018-10-29"; //체크되어야하는 날짜
         ArrayList<CalendarDay> dates = new ArrayList<>();
@@ -63,23 +87,7 @@ public class Record_act extends AppCompatActivity {
 
         CalendarDay day = CalendarDay.from(calendar);
         dates.add(day);
-        mcv.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-
-                String select_date = date.toString();
-                select_date = select_date.replaceFirst("CalendarDay\\{","");
-                select_date = select_date.replaceFirst("\\}","");
-                date_exerciselist =recordDB.date_exercise(recordDB,select_date);
-                Dialog(select_date);
-            }
-        });
         mcv.addDecorators(new EventDecorator(Color.RED,dates));
-        //Calendar calendar = Calendar.getInstance();
-        //calendar.setTime(selected_date);
-        //calendar.add(Calendar.DATE, 5);
-        //CalendarDay day = CalendarDay.from(calendar);
-        //dates.add(day);
 
     }
 

@@ -2,6 +2,7 @@ package com.example.chh85.exercise_elderly;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ public class Exercise1_act extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("유산소 운동");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise1_act);
 

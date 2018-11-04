@@ -2,6 +2,7 @@ package com.example.chh85.exercise_elderly;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("60+ 운동");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fb_userid = new Send_FB();
@@ -65,10 +68,11 @@ public class MainActivity extends AppCompatActivity {
         //Button user_info_btn = (Button) findViewById(R.id.user_info);
         //Button exercise_btn = (Button) findViewById(R.id.exercise_btn);
         //Button record_btn = (Button) findViewById(R.id.record_btn);
-        final ImageButton userinfo_btn,exercise_btn,record_btn;
+        final ImageButton userinfo_btn,exercise_btn,record_btn,healthinfo_btn;
         userinfo_btn = (ImageButton) findViewById(R.id.userinfo_btn);
         exercise_btn = (ImageButton) findViewById(R.id.exercise_btn);
         record_btn = (ImageButton) findViewById(R.id.record_btn);
+        healthinfo_btn=(ImageButton) findViewById(R.id.healthinfo_btn);
         userDB = new UserDB(this,"user_db",null,1);
 
 

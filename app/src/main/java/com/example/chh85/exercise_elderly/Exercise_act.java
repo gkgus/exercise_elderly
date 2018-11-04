@@ -2,10 +2,12 @@ package com.example.chh85.exercise_elderly;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -36,6 +38,8 @@ public class Exercise_act extends AppCompatActivity {
     ScheduleExercise scheduleExercise = new ScheduleExercise();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("운동하기");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_act);
 
@@ -91,10 +95,10 @@ public class Exercise_act extends AppCompatActivity {
 
         //Button clicked
         //Exercise1
-        Button exercise1_btn,exercise2_btn,exercise3_btn;
-        exercise1_btn = (Button) findViewById(R.id.exercise1_btn);
-        exercise2_btn=(Button)findViewById(R.id.exercise2_btn);
-        exercise3_btn = (Button) findViewById(R.id.exercise3_btn);
+        ImageButton exercise1_btn,exercise2_btn,exercise3_btn;
+        exercise1_btn = (ImageButton) findViewById(R.id.exercise1_btn);
+        exercise2_btn=(ImageButton)findViewById(R.id.exercise2_btn);
+        exercise3_btn = (ImageButton) findViewById(R.id.exercise3_btn);
         exercise1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

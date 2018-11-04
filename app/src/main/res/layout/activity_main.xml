@@ -21,11 +21,14 @@
             android:src="@drawable/user_info_img" />
 
 
-        <Button
-            android:id="@+id/button3"
+        <ImageButton
+            android:id="@+id/healthinfo_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="건강 정보" />
+            android:adjustViewBounds="true"
+            android:padding="0dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/health_info" />
 
         <ImageButton
             android:id="@+id/exercise_btn"

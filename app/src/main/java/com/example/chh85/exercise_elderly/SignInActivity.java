@@ -3,6 +3,7 @@ package com.example.chh85.exercise_elderly;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,8 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("60+ 운동");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
