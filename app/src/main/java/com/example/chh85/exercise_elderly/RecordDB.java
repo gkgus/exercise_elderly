@@ -19,7 +19,7 @@ public class RecordDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE record_exercise (ex_date date, ex_type String,ex_time String);");
+        db.execSQL("CREATE TABLE record_exercise (ex_date String, ex_type String,ex_time String);");
     }
 
     @Override

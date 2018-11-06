@@ -10,14 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/calendarView"
+
+        <TextView
+            android:id="@+id/main_YYMM_Tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mcv_selectionColor="#a99e24e1"
-            app:mcv_showOtherDates="defaults" >
+            android:background="#A777BE"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="----년-월"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#fff"
+            android:textSize="10pt" />
 
-        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+        <sun.bob.mcalendarview.views.ExpCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:layout_marginTop="10dp"
+            tools:context=".MainActivity" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

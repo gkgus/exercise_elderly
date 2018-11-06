@@ -9,17 +9,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,13 +24,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import sun.bob.mcalendarview.MarkStyle;
+import sun.bob.mcalendarview.listeners.OnDateClickListener;
+import sun.bob.mcalendarview.listeners.OnMonthChangeListener;
+import sun.bob.mcalendarview.views.ExpCalendarView;
+import sun.bob.mcalendarview.vo.DateData;
+
 public class Record_act extends AppCompatActivity {
 
-    private DatabaseReference mRead_FB;
-    String mUserID = Send_FB.getmUserID();
+
     RecordDB recordDB;
     ArrayList<String> date_exerciselist = new ArrayList<String>();
-    Handler mHandler = null;
+
     HashSet<String> date_set;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +45,31 @@ public class Record_act extends AppCompatActivity {
         setContentView(R.layout.activity_record_act);
         recordDB = new RecordDB(this,"record_exercise",null,1);
 
-
-        final MaterialCalendarView mcv = findViewById(R.id.calendarView);
-
-        mcv.state().edit()
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setMinimumDate(CalendarDay.from(2018, 1, 1))
-                .setMaximumDate(CalendarDay.from(2020, 11, 31))
-                .setCalendarDisplayMode(CalendarMode.MONTHS)
-                .commit();
-        mcv.addDecorators();
-
-        denote_date(mcv);
-
-        mcv.setOnDateChangedListener(new OnDateSelectedListener() {
+        final TextView YearMonthTv;
+        final ExpCalendarView calendarView = ((ExpCalendarView) findViewById(R.id.calendar));
+        YearMonthTv = (TextView) findViewById(R.id.main_YYMM_Tv);
+        YearMonthTv.setText(Calendar.getInstance().get(Calendar.YEAR) + "년 " + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "월");
+        calendarView.measureCurrentView(0);
+        calendarView.setOnMonthChangeListener(new OnMonthChangeListener() {
             @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+            public void onMonthChange(int year, int month) {
+                YearMonthTv.setText(String.format("%d년 %d월", year, month));
+            }
+        });
+        calendarView.setMarkedStyle(MarkStyle.BACKGROUND, Color.parseColor("#FFBA55DB"));
+        denote_date(calendarView);
+        //calendarView.markDate(new DateData(2018,11,21));
 
-                String select_date = date.toString();
-                select_date = select_date.replaceFirst("CalendarDay\\{","");
-                select_date = select_date.replaceFirst("\\}","");
-                date_exerciselist =recordDB.date_exercise(recordDB,select_date);
+        calendarView.setOnDateClickListener(new OnDateClickListener() {
+            @Override
+            public void onDateClick(View view, DateData date) {
+                String getDay;
+                if(date.getDay()<10){
+                    getDay= "0"+Integer.toString(date.getDay());
+                } else {
+                    getDay = Integer.toString(date.getDay());
+                }
+                String select_date= date.getYear()+"-"+date.getMonth()+"-"+getDay;
                 Dialog(select_date);
             }
         });
@@ -79,27 +82,28 @@ public class Record_act extends AppCompatActivity {
         //dates.add(day);
     }
 
-    public void denote_date (MaterialCalendarView mcv) {
+    public void denote_date (ExpCalendarView cv) {
 
         date_set= recordDB.set_of_date(recordDB);
-        ArrayList<CalendarDay> dates = new ArrayList<>();
-        Calendar ex_calendar = Calendar.getInstance();
-        CalendarDay day;
+
         for(String element: date_set){
-            try {
-                Date exercise_date = new SimpleDateFormat("yyyy-MM-dd").parse(element);
-                ex_calendar.setTime(exercise_date);
-                day = CalendarDay.from(ex_calendar);
-                dates.add(day);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+            System.out.println(element);
+
+            int year= Integer.parseInt(element.substring(0,4));
+            int month=Integer.parseInt(element.substring(5,7));
+            int day = Integer.parseInt(element.substring(8,10));
+
+            cv.markDate(year,month,day);
+
         }
 
-        mcv.addDecorators(new EventDecorator(Color.RED,dates));
+
     }
 
     public void Dialog(String select_date){
+
+        date_exerciselist=recordDB.date_exercise(recordDB,select_date);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(select_date);
         String contents="\n";
