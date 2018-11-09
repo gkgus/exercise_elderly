@@ -54,7 +54,7 @@ public class RecordDB extends SQLiteOpenHelper {
         sqldb.close();
     }
 
-    public void existDB(RecordDB recordDB) {
+    public void backupDB(RecordDB recordDB) {
         sqldb = recordDB.getReadableDatabase();
         Cursor cursor;
         cursor = sqldb.rawQuery("SELECT * FROM record_exercise", null);
@@ -69,6 +69,23 @@ public class RecordDB extends SQLiteOpenHelper {
             //return false;
         }
     }
+
+
+    public Boolean exist_db (RecordDB recordDB){
+        sqldb = recordDB.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqldb.rawQuery("SELECT * FROM record_exercise",null);
+        cursor.moveToFirst();
+        if(cursor.getCount()>0){
+            sqldb.close();
+            return true;
+        }else{
+            sqldb.close();
+            return false;
+        }
+    }
+
+
 
     public ArrayList<String> date_exercise(RecordDB recordDB, String date) {
         ArrayList<String> exercise_list = new ArrayList<String>();

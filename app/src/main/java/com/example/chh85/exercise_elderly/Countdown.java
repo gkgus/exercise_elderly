@@ -166,8 +166,9 @@ public class Countdown {
             ex_num=1;
         }
         exerciseDB.updateDB(exerciseDB,dbattr,ex_num-1);
+
         String tmp_time = Integer.toString(ex_time);
-        send_exinfo.FB_exercise(ex_name,tmp_time);
+        send_exinfo.FB_exercise(context,ex_name,tmp_time);
 
     }
 }

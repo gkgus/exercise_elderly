@@ -114,15 +114,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recordDB = new RecordDB(this,"record_exercise",null,1);
-        recordDB.existDB(recordDB);
+        if(recordDB.exist_db(recordDB)==true){
+            System.out.println("recordDB existed!");
+        } else{
+            System.out.println("recordDB no existed!");
+            recordDB.backupDB(recordDB);
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    getFB();
+                }
+            });
+            th.run();
+        }
 
-        Thread th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getFB();
-            }
-        });
-        th.run();
+
     }
 
     @Override
