@@ -3,6 +3,7 @@ package com.example.chh85.exercise_elderly;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -29,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -44,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     Send_FB fb_userid;
     String user_id;
     ImageView weather_img;
-    TextView ex_weather, weather_info, weather_temp;
+    TextView ex_weather, weather_info, weather_temp, weather_pm;
+    Boolean weather_ex_status, pm_ex_status;
     final String TAG = "WEATHER_APP";
     //firebase login activity
     private static final int REQUEST_INVITE = 1000;
@@ -101,12 +105,15 @@ public class MainActivity extends AppCompatActivity {
         ex_weather=(TextView) findViewById(R.id.ex_weather);
         weather_info=(TextView)findViewById(R.id.weather_info);
         weather_temp=(TextView)findViewById(R.id.weather_temp);
+        weather_pm=(TextView)findViewById(R.id.weather_pm);
         userDB = new UserDB(this, "user_db", null, 1);
 
 
         String apiURL="http://api.openweathermap.org/data/2.5/weather?lat=37.318199&lon=127.087898&units=metric&appid=19f354e638b73566d4d7c17c303213fd";
         ReceiveWeatherTask receiveUseTask = new ReceiveWeatherTask();
         receiveUseTask.execute(apiURL);
+        getPM();
+
 
         userinfo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class ReceiveWeatherTask extends AsyncTask<String, Void, JSONObject> {
-        Boolean weather_ex_status;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -264,17 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        private String exercise_weather(){
-            String good_weather ="운동하기 좋은 날씨";
-            String bad_weather = "운동을 자제해 주세요";
 
-            if(weather_ex_status==true){
-                return good_weather;
-            } else {
-                return bad_weather;
-            }
-
-        }
         //이미지를 바탕으로 날씨 표시
         private String weather_icon_description(String weatherIcon){
             String weather_description ="";
@@ -320,6 +315,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public String exercise_weather(){
+        String good_weather ="운동하기 좋은 날씨";
+        String bad_weather = "운동을 자제해 주세요";
+
+        if(weather_ex_status&&pm_ex_status){
+            return good_weather;
+        } else {
+            return bad_weather;
+        }
+
+    }
         public void Check_currentuser() {
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -340,6 +347,88 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    public void getPM(){
+
+        boolean initem=false, dataTime = false, seoul_pm = false, gyeonggi_pm = false;
+        StrictMode.enableDefaults();
+        int pm_rate=0;
+        String dataTime_str = null, seoul_pm_str = null, gyeonggi_pm_str = null;
+
+        try{
+            URL url = new URL("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst?" +
+                    "serviceKey=DZl7LZ1uLqXNmWKBp7qmlVmiMNgKS2B32rAmciES1NRS8xKIt%2F8%2BDT6gtsO45FcxheJYbse0BhIKkQp%2BB4B4cQ%3D%3D&numOfRows=10&pageSize=10&pageNo=1&startPage=1&itemCode=PM10&dataGubun=HOUR&searchCondition=MONTH"
+            ); //검색 URL부분
+
+            XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = parserCreator.newPullParser();
+
+            parser.setInput(url.openStream(), null);
+
+            int parserEvent = parser.getEventType();
+            System.out.println("파싱시작합니다.");
+//parserEvent != XmlPullParser.END_DOCUMENT
+            while (initem==false){
+                switch(parserEvent){
+                    case XmlPullParser.START_TAG://parser가 시작 태그를 만나면 실행
+                        if(parser.getName().equals("dataTime")){ //dataTime 만나면 내용을 받을수 있게 하자
+                            dataTime = true;
+                        }
+                        if(parser.getName().equals("seoul")){ //seoul 만나면 내용을 받을수 있게 하자
+                            seoul_pm = true;
+                        }
+                        if(parser.getName().equals("gyeonggi")){ //gyeonggi 만나면 내용을 받을수 있게 하자
+                            gyeonggi_pm = true;
+                        }
+
+                        if(parser.getName().equals("message")){ //message 태그를 만나면 에러 출력
+                            weather_pm.setText(weather_pm.getText()+"에러");
+                            //여기에 에러코드에 따라 다른 메세지를 출력하도록 할 수 있다.
+                        }
+                        break;
+
+                    case XmlPullParser.TEXT://parser가 내용에 접근했을때
+                        if(dataTime){ //isTitle이 true일 때 태그의 내용을 저장.
+                            dataTime_str = parser.getText();
+                            dataTime = false;
+                        }
+                        if(seoul_pm){ //isAddress이 true일 때 태그의 내용을 저장.
+                            seoul_pm_str = parser.getText();
+                            seoul_pm = false;
+                        }
+                        if(gyeonggi_pm){ //isMapx이 true일 때 태그의 내용을 저장.
+                            gyeonggi_pm_str = parser.getText();
+                            gyeonggi_pm = false;
+                        }
+
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if(parser.getName().equals("item")){
+                            pm_rate=Integer.parseInt(gyeonggi_pm_str);
+                           System.out.println("시간 : "+ dataTime_str +"\n 서울: "+ seoul_pm_str +"\n 경기 : " + gyeonggi_pm_str+"\n");
+                            initem = true;
+                        }
+                        break;
+                }
+                parserEvent = parser.next();
+            }
+        } catch(Exception e){
+            weather_pm.setText("에러가..났습니다...");
+        }
+
+        if(pm_rate<16){
+            weather_pm.setText("미세먼지: 좋음");
+            pm_ex_status=true;
+        } else if(16<=pm_rate&&pm_rate<36){
+            weather_pm.setText("미세먼지: 보통");
+            pm_ex_status=true;
+
+        } else if(pm_rate>=36){
+            weather_pm.setText("미세먼지: 나쁨");
+            pm_ex_status=false;
+        }
+
+
+    }
 
         public void getFB() {
             mRead_FB = FirebaseDatabase.getInstance().getReference().child(user_id).child("exerciserec");
