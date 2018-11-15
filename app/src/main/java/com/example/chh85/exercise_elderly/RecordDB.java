@@ -109,7 +109,7 @@ public class RecordDB extends SQLiteOpenHelper {
         sqldb = recordDB.getReadableDatabase();
         Cursor cursor;
         cursor = sqldb.rawQuery("SELECT ex_date FROM record_exercise;", null);
-
+S
         while (cursor.moveToNext()) {
                 date_set.add(cursor.getString(0));
         }
