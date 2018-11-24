@@ -41,6 +41,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    //android:icon="@mipmap/ic_launcher"
     UserDB userDB;
     Intent exercise_intent;
     int updated = 3;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("60+ 운동");
+        ab.setTitle("65+ 운동");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fb_userid = new Send_FB();
@@ -306,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                 weather_ex_status=false;
             }
             if(weatherIcon.contains("50")==true){
-                weather_description="안개";
+                weather_description="흐림";
                 weather_ex_status=true;
             }
 
@@ -421,7 +422,6 @@ public class MainActivity extends AppCompatActivity {
         } else if(16<=pm_rate&&pm_rate<36){
             weather_pm.setText("미세먼지: 보통");
             pm_ex_status=true;
-
         } else if(pm_rate>=36){
             weather_pm.setText("미세먼지: 나쁨");
             pm_ex_status=false;

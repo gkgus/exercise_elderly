@@ -74,6 +74,22 @@ public class Record_act extends AppCompatActivity {
             }
         });
 
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        String cur_month = sdf.format(date);
+        int ex1_count = recordDB.count_ex(recordDB,1,cur_month);
+        int ex2_count = recordDB.count_ex(recordDB,2,cur_month);
+        int ex3_count = recordDB.count_ex(recordDB,3,cur_month);
+        System.out.println("ex1 월 횟수>>"+ex1_count);
+        TextView ex1_count_tv, ex2_count_tv, ex3_count_tv;
+        ex1_count_tv = (TextView) findViewById(R.id.ex1_count);
+        ex2_count_tv = (TextView) findViewById(R.id.ex2_count);
+        ex3_count_tv = (TextView) findViewById(R.id.ex3_count);
+
+        ex1_count_tv.setText("유산소 운동: "+ex1_count);
+        ex2_count_tv.setText("근력 운동: "+ex2_count);
+        ex3_count_tv.setText("스트레칭 운동: "+ex3_count);
+
 
         //Calendar calendar = Calendar.getInstance();
         //calendar.setTime(selected_date);

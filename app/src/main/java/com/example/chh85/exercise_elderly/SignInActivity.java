@@ -43,7 +43,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("60+ 운동");
+        ab.setTitle("65+ 운동");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 

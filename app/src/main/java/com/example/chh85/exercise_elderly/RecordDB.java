@@ -85,8 +85,6 @@ public class RecordDB extends SQLiteOpenHelper {
         }
     }
 
-
-
     public ArrayList<String> date_exercise(RecordDB recordDB, String date) {
         ArrayList<String> exercise_list = new ArrayList<String>();
         sqldb = recordDB.getReadableDatabase();
@@ -102,6 +100,21 @@ public class RecordDB extends SQLiteOpenHelper {
         }
         sqldb.close();
         return exercise_list;
+    }
+
+    public int count_ex(RecordDB recordDB, int ex_name, String month){
+        sqldb = recordDB.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqldb.rawQuery("SELECT count(ex_type) FROM record_exercise" +
+                " WHERE " + "ex_type= '" + ex_name+ "' and " +"ex_date like '"+ month+"%';", null);
+        int count_num=0;
+        while (cursor.moveToNext()) {
+
+            count_num =cursor.getInt(0);
+
+        }
+        sqldb.close();
+        return count_num;
     }
 
     public HashSet<String> set_of_date(RecordDB recordDB){
