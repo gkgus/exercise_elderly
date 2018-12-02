@@ -37,7 +37,6 @@ public class Countdown {
 
         btnPause.setEnabled(false);
 
-
         //Set a Click Listener for start button
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override

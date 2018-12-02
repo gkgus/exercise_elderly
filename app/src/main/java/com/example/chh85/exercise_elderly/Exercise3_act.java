@@ -34,7 +34,7 @@ public class Exercise3_act extends AppCompatActivity {
         ex3_num = ex3_list[0];
         ex3_time= ex3_list[1];
 
-
+        tView.setText("스트레칭 "+ex3_time+"분");
         Countdown ex2_countdown = new Countdown(getApplicationContext(),btnStart,btnPause,tView,3,ex3_num,ex3_time);
         ex2_countdown.setDbattr("ex3_weeknum"); //DB에서 레코드 찾아서 바꾸기
         ex2_countdown.countdown_func();
@@ -50,17 +50,15 @@ public class Exercise3_act extends AppCompatActivity {
         ,"(좌/우) 한 쪽발을 무릎 안쪽에 붙인 뒤 손으로 발목을 잡습니다.","양 쪽 무릎을 붙인 뒤 손으로 발목을 잡습니다.","양 쪽 발바닥을 맞대고 상체를 숙여줍니다.",
         "(좌/우) 옆으로 누운 뒤 위쪽 다리의 발을 잡고 뒤로 당겨줍니다."};
         final ArrayList<ExerciseInfo> exerciselist3 = new ArrayList<>();
-        for(int i =0; i<exercise3title.length;i++){
-            exerciselist3.add( new ExerciseInfo(R.drawable.ex3_1,exercise3title[i],exercise3_how[i]));
-        }
-        /*
+
+
         exerciselist3.add( new ExerciseInfo(R.drawable.ex3_1,exercise3title[0],exercise3_how[0]));
-        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_2,exercise3title[1]));
-        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_3,exercise3title[2]));
-        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_4,exercise3title[3]));
-        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_5,exercise3title[4]));
-        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_6,exercise3title[5]));
-*/
+        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_2,exercise3title[1],exercise3_how[1]));
+        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_3,exercise3title[2],exercise3_how[2]));
+        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_4,exercise3title[3],exercise3_how[3]));
+        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_5,exercise3title[4],exercise3_how[4]));
+        exerciselist3.add(new ExerciseInfo(R.drawable.ex3_6,exercise3title[5],exercise3_how[5]));
+
 
         MyAdapter myAdapter = new MyAdapter(exerciselist3);
 

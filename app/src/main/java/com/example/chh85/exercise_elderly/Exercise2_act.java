@@ -33,7 +33,7 @@ public class Exercise2_act extends AppCompatActivity {
         ex2_num = ex2_list[0];
         ex2_time= ex2_list[1];
 
-
+        tView.setText("근력 운동 "+ex2_time+"분");
         Countdown ex2_countdown = new Countdown(getApplicationContext(),btnStart,btnPause,tView,2,ex2_num,ex2_time);
         ex2_countdown.setDbattr("ex2_weeknum"); //DB에서 레코드 찾아서 바꾸기
         ex2_countdown.countdown_func();
@@ -49,17 +49,15 @@ public class Exercise2_act extends AppCompatActivity {
                 "(좌/우) 누운 상태에서 상체를 들어올리고 다리를 들어 올립니다.","(좌/우) 옆으로 누운 상태에서 다리를 들어 올립니다.",
                 "(좌/우) 앉은 상태에서 한 쪽 다리를 들어 올립니다.","(좌/우) 의자에 앉아 한쪽 다리를 뻗어 올립니다."};
         final ArrayList<ExerciseInfo> exercise2list = new ArrayList<>();
-        for(int i =0; i<exercise2title.length;i++){
-            exercise2list.add( new ExerciseInfo(R.drawable.ex2_1,exercise2title[i],exercise2_how[i]));
-        }
-        /*
-        exercise2list.add( new ExerciseInfo(R.drawable.ex2_1,exercise2title[0]));
-        exercise2list.add(new ExerciseInfo(R.drawable.ex2_2,exercise2title[1]));
-        exercise2list.add(new ExerciseInfo(R.drawable.ex2_3,exercise2title[2]));
-        exercise2list.add(new ExerciseInfo(R.drawable.ex2_4,exercise2title[3]));
-        exercise2list.add(new ExerciseInfo(R.drawable.ex2_5,exercise2title[4]));
-        exercise2list.add(new ExerciseInfo(R.drawable.ex2_6,exercise2title[5]));
-*/
+
+
+        exercise2list.add( new ExerciseInfo(R.drawable.ex2_1,exercise2title[0],exercise2_how[0]));
+        exercise2list.add(new ExerciseInfo(R.drawable.ex2_2,exercise2title[1],exercise2_how[1]));
+        exercise2list.add(new ExerciseInfo(R.drawable.ex2_3,exercise2title[2],exercise2_how[2]));
+        exercise2list.add(new ExerciseInfo(R.drawable.ex2_4,exercise2title[3],exercise2_how[3]));
+        exercise2list.add(new ExerciseInfo(R.drawable.ex2_5,exercise2title[4],exercise2_how[4]));
+        exercise2list.add(new ExerciseInfo(R.drawable.ex2_6,exercise2title[5],exercise2_how[5]));
+
 
         MyAdapter myAdapter = new MyAdapter(exercise2list);
 

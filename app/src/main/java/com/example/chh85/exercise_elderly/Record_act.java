@@ -48,12 +48,28 @@ public class Record_act extends AppCompatActivity {
         final TextView YearMonthTv;
         final ExpCalendarView calendarView = ((ExpCalendarView) findViewById(R.id.calendar));
         YearMonthTv = (TextView) findViewById(R.id.main_YYMM_Tv);
+        final TextView month_tv = (TextView) findViewById(R.id.month_tv);
         YearMonthTv.setText(Calendar.getInstance().get(Calendar.YEAR) + "년 " + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "월");
         calendarView.measureCurrentView(0);
         calendarView.setOnMonthChangeListener(new OnMonthChangeListener() {
             @Override
             public void onMonthChange(int year, int month) {
                 YearMonthTv.setText(String.format("%d년 %d월", year, month));
+                String Curmonth = Integer.toString(year)+"-"+Integer.toString(month);
+                int ex1_count = recordDB.count_ex(recordDB,1,Curmonth);
+                int ex2_count = recordDB.count_ex(recordDB,2,Curmonth);
+                int ex3_count = recordDB.count_ex(recordDB,3,Curmonth);
+                System.out.println("ex1 월 횟수>>"+ex1_count);
+                month_tv.setText(String.format("%d월 운동 횟수",month));
+                TextView ex1_count_tv, ex2_count_tv, ex3_count_tv;
+                ex1_count_tv = (TextView) findViewById(R.id.ex1_count);
+                ex2_count_tv = (TextView) findViewById(R.id.ex2_count);
+                ex3_count_tv = (TextView) findViewById(R.id.ex3_count);
+
+                ex1_count_tv.setText("유산소 운동: "+ex1_count);
+                ex2_count_tv.setText("근력 운동: "+ex2_count);
+                ex3_count_tv.setText("스트레칭 운동: "+ex3_count);
+
             }
         });
         calendarView.setMarkedStyle(MarkStyle.BACKGROUND, Color.parseColor("#FFBA55DB"));
@@ -77,18 +93,7 @@ public class Record_act extends AppCompatActivity {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         String cur_month = sdf.format(date);
-        int ex1_count = recordDB.count_ex(recordDB,1,cur_month);
-        int ex2_count = recordDB.count_ex(recordDB,2,cur_month);
-        int ex3_count = recordDB.count_ex(recordDB,3,cur_month);
-        System.out.println("ex1 월 횟수>>"+ex1_count);
-        TextView ex1_count_tv, ex2_count_tv, ex3_count_tv;
-        ex1_count_tv = (TextView) findViewById(R.id.ex1_count);
-        ex2_count_tv = (TextView) findViewById(R.id.ex2_count);
-        ex3_count_tv = (TextView) findViewById(R.id.ex3_count);
 
-        ex1_count_tv.setText("유산소 운동: "+ex1_count);
-        ex2_count_tv.setText("근력 운동: "+ex2_count);
-        ex3_count_tv.setText("스트레칭 운동: "+ex3_count);
 
 
         //Calendar calendar = Calendar.getInstance();

@@ -125,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        healthinfo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent health_info = new Intent(getApplicationContext(),Health_Info_act.class);
+                startActivity(health_info);
+            }
+        });
+
         exercise_intent = new Intent(getApplicationContext(), Exercise_act.class);
 
         exercise_btn.setOnClickListener(new View.OnClickListener() {
@@ -319,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String exercise_weather(){
         String good_weather ="운동하기 좋은 날씨";
-        String bad_weather = "운동을 자제해 주세요";
+        String bad_weather = "외출을 자제해 주세요";
 
         if(weather_ex_status&&pm_ex_status){
             return good_weather;

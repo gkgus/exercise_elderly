@@ -26,14 +26,15 @@ public class Exercise1_act extends AppCompatActivity {
         ex1_list = get_intent.getIntArrayExtra("ex1");
         ex1_num = ex1_list[0];
         ex1_time = ex1_list[1];
-
+        TextView ex1_tv = (TextView)findViewById(R.id.ex1_tv);
+        ex1_tv.setText("유산소 운동 "+ex1_time+"분");
 
         //Get reference of the XML layout's widgets
-        final TextView tView = (TextView) findViewById(R.id.tv);
+        //final TextView tView = (TextView) findViewById(R.id.tv);
         final Button btnStart = (Button) findViewById(R.id.btn_start);
         final Button btnPause = (Button) findViewById(R.id.btn_pause);
 
-        Countdown ex2_countdown = new Countdown(getApplicationContext(),btnStart,btnPause,tView,1,ex1_num,ex1_time);
+        Countdown ex2_countdown = new Countdown(getApplicationContext(),btnStart,btnPause,ex1_tv,1,ex1_num,ex1_time);
         ex2_countdown.setDbattr("ex1_weeknum"); //DB에서 속성 찾아서 바꾸기
         ex2_countdown.countdown_func();
 

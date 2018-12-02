@@ -25,7 +25,8 @@
         <activity android:name=".Exercise_list_act" />
         <activity android:name=".Exercise3_act" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".Record_act"></activity>
+        <activity android:name=".Record_act" />
+        <activity android:name=".Health_Info_act"></activity>
     </application>
 
 </manifest>
